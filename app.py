@@ -82,7 +82,6 @@ def load_global_series(filename):
 
     return long
 
-≈
 ### US ONLY
 @st.cache_data
 def load_us_series(filename):
