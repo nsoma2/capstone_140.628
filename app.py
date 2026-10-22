@@ -3,7 +3,6 @@
 # COVID-19 cases by country
 
 # Packages:
-from streamlit.elements.widgets.select_slider import SelectSliderSerde
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -78,6 +77,7 @@ def load_global_series(filename):
 
     # calculate new daily values from the cumulative total grouped by country
     long["daily"] = long.groupby("country")["cumulative"].diff().fillna(0)
+    long["daily"] = long["daily"].clip(lower=0)
 
     return long
 
@@ -125,7 +125,7 @@ st.sidebar.header('Dashboard Options')
 ### View toggle: Global vs. United States
 view = st.sidebar.selectbox(
     "View",
-    ["Global (by Country)", "United States (by State)"],
+    ["Global (by County)", "United States (by State)"],
     index=0,
 )
 
