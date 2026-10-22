@@ -125,7 +125,7 @@ st.sidebar.header('Dashboard Options')
 ### View toggle: Global vs. United States
 view = st.sidebar.selectbox(
     "View",
-    ["Global (by County)", "United States (by State)"],
+    ["Global (by Country)", "United States (by State)"],
     index=0,
 )
 
