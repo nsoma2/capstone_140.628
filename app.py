@@ -27,7 +27,7 @@ with c2:
             "(https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series).\n"
             " - Data run from **January 22, 2020** to **March 10,2023**, when JHU stopped collecting. \n"
             
-            " - CSSE reports cumulative totals; daily counts are the day-over-day difference. \n"
+            " - CSSE reports cumulative totals; daily counts are the day-over-day difference; negative daily values are clipped to 0. \n"
             
             " - Global files are summed across provinces to one row per country. \n"
            
@@ -51,10 +51,11 @@ US_FILES = {
     "Confirmed cases - US" : "time_series_covid19_confirmed_US.csv",
     "Deaths - US": "time_series_covid19_deaths_US.csv",
 }
-@st.cache_data
+
 
 # WIDE TO LONG - Data loading functions
 ### GLOBAL 
+@st.cache_data
 def load_global_series(filename):
     """Read one CSSE file, collapse provinces into countries, return long format."""
     df = pd.read_csv(BASE + filename)
@@ -81,7 +82,9 @@ def load_global_series(filename):
 
     return long
 
+≈
 ### US ONLY
+@st.cache_data
 def load_us_series(filename):
     """Read one CSSE file, collapse provinces into countries, return long format."""
     df = pd.read_csv(BASE + filename)
@@ -125,7 +128,7 @@ st.sidebar.header('Dashboard Options')
 ### View toggle: Global vs. United States
 view = st.sidebar.selectbox(
     "View",
-    ["Global (by County)", "United States (by State)"],
+    ["Global (by Country)", "United States (by State)"],
     index=0,
 )
 
